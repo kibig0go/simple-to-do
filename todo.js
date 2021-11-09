@@ -7,8 +7,8 @@ const list = {
 let task;
 let stat;
 const TODO = 'To Do';
-const InProgress = 'In Progress';
-const Done = 'Done';
+const INPROGRESS = 'In Progress';
+const DONE = 'Done';
 
 function promptUser() {
     const prompt = require('prompt-sync')();
@@ -19,7 +19,7 @@ function promptUser() {
 
 function changeStatus(task, stat) {
 
-    const Is_Status_Valid = (stat == InProgress || stat == Done || stat == TODO);
+    const Is_Status_Valid = (stat == INPROGRESS || stat == DONE || stat == TODO);
 
     if (isTaskInList && Is_Status_Valid) {
         list[task] = stat;
@@ -73,31 +73,22 @@ function showList() {
     for (task in list) {
         if (list[task] == TODO) {
             console.log(task);
-        } else {
-            console.log('---');
-            break;
-        }
+        } 
     }
     
     console.log('In Progress: ');
 
     for (task in list) {
-        if (list[task] == InProgress) {
+        if (list[task] == INPROGRESS) {
             console.log(task);
-        } else {
-            console.log('---');
-            break;
         }
     }
     console.log('Done: ');
 
     for (task in list) {
-        if (list[task] == Done) {
+        if (list[task] === DONE) {
             console.log(task);
-        } else {
-            console.log('---');
-            break;
-        }
+        } 
     }
 }    
 
