@@ -29,7 +29,7 @@ function changeStatus(task, stat) {
 
 function addTask(task) {
     
-    if (!isTaskInList){
+    if (!isTaskInList(task)){
        list[task] = TODO; 
     } else {
         console.log('Task already in List');
@@ -60,12 +60,23 @@ function isTaskInList(task) {
 
 function showList() {
     
+    if ( stat == 'del' ) {
+        deleteTask(task);
+    } else if ( task  && stat ) {
+        changeStatus(task, stat);
+    } else if ( task  && !stat ) {
+        addTask(task);
+    }
+
     console.log('To Do: ');
 
     for (task in list) {
         if (list[task] == TODO) {
             console.log(task);
-        } 
+        } else {
+            console.log('---');
+            break;
+        }
     }
     
     console.log('In Progress: ');
@@ -73,6 +84,9 @@ function showList() {
     for (task in list) {
         if (list[task] == InProgress) {
             console.log(task);
+        } else {
+            console.log('---');
+            break;
         }
     }
     console.log('Done: ');
@@ -80,22 +94,13 @@ function showList() {
     for (task in list) {
         if (list[task] == Done) {
             console.log(task);
+        } else {
+            console.log('---');
+            break;
         }
     }
 }    
 
 printList();
 promptUser();
- 
-
-
-if ( stat == 'del' ) {
-    deleteTask(task);
-} else if ( task  && stat ) {
-    changeStatus(task, stat);
-} else if ( task  && !stat ) {
-    addTask(task);
-}
-
-
 showList();
