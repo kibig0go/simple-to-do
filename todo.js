@@ -4,16 +4,47 @@ const list = {
     "write a post": "To Do",
 };
 
+let task;
+let stat;
+const TODO = 'To Do';
+const InProgress = 'In Progress';
+const Done = 'Done';
+
+function promptUser() {
+    const prompt = require('prompt-sync')();
+ 
+    task = prompt('Task: ');
+    stat = prompt('Status: ');
+}
+
 function changeStatus(task, stat) {
-    list[task] = stat;
+
+    const Is_Status_Valid = (stat == InProgress || stat == Done || stat == TODO);
+
+    if (isTaskInList && Is_Status_Valid) {
+        list[task] = stat;
+    }
+        
 }
 
 function addTask(task) {
-    list[task] = 'To Do';
+    
+    if (!isTaskInList){
+       list[task] = TODO; 
+    } else {
+        console.log('Task already in List');
+    }
+
 }
 
 function deleteTask() {
-    delete list[task];
+    
+    if (isTaskInList) {
+        delete list[task];
+    } else {
+        console.log('no such task');
+    }
+
 }
 
 
@@ -23,54 +54,48 @@ function printList() {
     }
 }
 
+function isTaskInList(task) {
+    return task in list;
+}
+
 function showList() {
-    let InProgress = [];
-    let ToDo = [];
-    let Done = [];
-    sort(InProgress, ToDo, Done);
-    console.log('ToDo:');
-    for (task in ToDo) {
-        console.log(`"${ToDo[task]}"`);
-    }
+    
+    console.log('To Do: ');
 
-    console.log('In Progress:');
-    for (task in InProgress) {
-        console.log(`"${InProgress[task]}"`);
+    for (task in list) {
+        if (list[task] == TODO) {
+            console.log(task);
+        } 
     }
+    
+    console.log('In Progress: ');
 
-    console.log('Done:');
-    for (task in Done) {
-        console.log(`"${Done[task]}"`);
-    }
-}
-
-function sort(InProgress, ToDo, Done) {
-    for (const [task, stat] of Object.entries(list)) {
-        if (stat === 'In Progress') {
-          InProgress.push(task);
-        } else if (stat === 'Done') {
-          Done.push(task);
-        } else if (stat === 'To Do') {
-          ToDo.push(task);
+    for (task in list) {
+        if (list[task] == InProgress) {
+            console.log(task);
         }
-      }    
-}
+    }
+    console.log('Done: ');
+
+    for (task in list) {
+        if (list[task] == Done) {
+            console.log(task);
+        }
+    }
+}    
 
 printList();
-
-    const prompt = require('prompt-sync')();
+promptUser();
  
-    let task = prompt('Task: ');
-    let stat = prompt('Status: ');
 
 
-if ( task !== '' && stat == 'del' ) {
+if ( stat == 'del' ) {
     deleteTask(task);
-} else if ( task !== '' && stat !== '') {
+} else if ( task  && stat ) {
     changeStatus(task, stat);
-} else if ( task !== '' && stat == '') {
+} else if ( task  && !stat ) {
     addTask(task);
 }
 
-printList();
+
 showList();
