@@ -19,10 +19,12 @@ function promptUser() {
 
 function changeStatus(task, stat) {
 
-    const Is_Status_Valid = (stat == INPROGRESS || stat == DONE || stat == TODO);
+    const IS_STATUS_VALID = (stat == INPROGRESS || stat == DONE || stat == TODO);
 
-    if (isTaskInList && Is_Status_Valid) {
+    if (isTaskInList && IS_STATUS_VALID) {
         list[task] = stat;
+    } else if (!IS_STATUS_VALID) {
+        console.log('Invalid status');
     }
         
 }
@@ -75,7 +77,7 @@ function showList() {
     console.log('To Do: ');
 
     for (task in list) {
-        if (list[task] == TODO) {
+        if (list[task] === TODO) {
             console.log(task);
             a = 0;
         } 
@@ -87,7 +89,7 @@ function showList() {
     console.log('In Progress: ');
 
     for (task in list) {
-        if (list[task] == INPROGRESS) {
+        if (list[task] === INPROGRESS) {
             console.log(task);
             b = 0;
         }
